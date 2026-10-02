@@ -1,0 +1,34 @@
+package com.goroute.service.impl;
+
+import com.goroute.model.Bus;
+import com.goroute.repository.BusRepository;
+import com.goroute.service.BusService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class BusServiceImpl implements BusService {
+
+    private final BusRepository busRepository;
+
+    public BusServiceImpl(BusRepository busRepository) {
+        this.busRepository = busRepository;
+    }
+
+    @Override
+    public Bus createBus(Bus bus) {
+        return busRepository.save(bus);
+    }
+
+    @Override
+    public Bus getBusById(Long id) {
+        return busRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bus not found"));
+    }
+
+    @Override
+    public List<Bus> getAllBuses() {
+        return busRepository.findAll();
+    }
+}
